@@ -46,12 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         textView = findViewById(R.id.tvText);
 
-
         checarPermissaoClient();
-
-
-
-
 
 
     }
@@ -69,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     //O código abaixo faz o tratamento da resposta do usuário sobre a PERMISSAO
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -85,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
     }
+
     @Override
     protected void onResume() {
         //Question of location request
@@ -97,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         client.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                if(location != null){
+                if (location != null) {
                     Bundle bundle = new Bundle();
                     bundle.putDouble("Lat", location.getLatitude());
                     bundle.putDouble("Long", location.getLongitude());
@@ -105,15 +102,15 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                     intent.putExtra("location", bundle);
                     startActivity(intent);
-                    Log.i("Sucess_Location","Lat "+location.getLatitude()+" Long "+location.getLongitude());
-                }else {
+                    Log.i("Sucess_Location", "Lat " + location.getLatitude() + " Long " + location.getLongitude());
+                } else {
                     Log.i("Erro_Location", "Location is Null");
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.i("teste","Falha ao pegar a localização"+e);
+                Log.i("teste", "Falha ao pegar a localização" + e);
             }
         });
 
@@ -122,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void googlePlayAtualizada() {
         int gPlayServices = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
-        if((gPlayServices == ConnectionResult.SERVICE_MISSING)
+        if ((gPlayServices == ConnectionResult.SERVICE_MISSING)
                 || (gPlayServices == ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED)
                 || (gPlayServices == ConnectionResult.SERVICE_DISABLED)) {
             Toast.makeText(this, "Fail | Baixe/ Ative/ Atualize o Google Play Services", Toast.LENGTH_SHORT).show();
@@ -135,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }).show();
         }
-        if(gPlayServices == ConnectionResult.SUCCESS){
+        if (gPlayServices == ConnectionResult.SUCCESS) {
             //Toast.makeText(this, "Sucess | Google services", Toast.LENGTH_SHORT).show();
         }
     }
@@ -151,22 +148,21 @@ public class MainActivity extends AppCompatActivity {
                         //verificar se o GPS esta ativo e outras coisas
                         // locationSettingsResponse.getLocationSettingsStates().isGpsPresent();
                         Log.i("Teste", locationSettingsResponse.
-                                getLocationSettingsStates().isNetworkLocationPresent()+" que tem net");
+                                getLocationSettingsStates().isNetworkLocationPresent() + " que tem net");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                if(e instanceof ResolvableApiException){
+                if (e instanceof ResolvableApiException) {
                     try {
                         ResolvableApiException resolvable = (ResolvableApiException) e;
-                        resolvable.startResolutionForResult(MainActivity.this,10);
-                    }catch (IntentSender.SendIntentException ex) {
+                        resolvable.startResolutionForResult(MainActivity.this, 10);
+                    } catch (IntentSender.SendIntentException ex) {
                         ex.printStackTrace();
                     }
                 }
             }
         });
-
 
 
     }

@@ -36,6 +36,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.ufc.com.googlemapslocalizacaoeplayservices.Constants;
 import com.ufc.com.googlemapslocalizacaoeplayservices.FetchAddressService;
+import com.ufc.com.googlemapslocalizacaoeplayservices.MapsActivity;
 import com.ufc.com.googlemapslocalizacaoeplayservices.R;
 import com.ufc.com.googlemapslocalizacaoeplayservices.TesteActivity;
 
@@ -125,6 +126,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Location location) {
                 if(location != null){
+                    Bundle bundle = new Bundle();
+                    bundle.putDouble("Lat", location.getLatitude());
+                    bundle.putDouble("Long", location.getLongitude());
+                    //TROCAR PELA ACTIVITY DO MAPA
+                    Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                    intent.putExtra("location", bundle);
+                    startActivity(intent);
                     Log.i("Sucess_Location","Lat "+location.getLatitude()+" Long "+location.getLongitude());
                 }else {
                     Log.i("Erro_Location", "Location is Null");
@@ -232,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
                         Bundle bundle = new Bundle();
                         bundle.putString("location", enderecoSaida);
                         //TROCAR PELA ACTIVITY DO MAPA
-                        Intent intent = new Intent(MainActivity.this, TesteActivity.class);
+                        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                         intent.putExtra("location", bundle);
                         startActivity(intent);
                     }

@@ -12,11 +12,16 @@ public class TesteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teste);
-
         textView = findViewById(R.id.tvTexto);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("location");
+
+
+
+
+
+
 
         textView.setText(bundle.getString("location"));
 
